@@ -1,0 +1,37 @@
+version: '3.4'
+services:
+  mongo:
+    container_name: mongodb-shopping-cart
+    image: mongo:3.6.8
+    restart: always
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=supersecret
+      - MONGODB_DATABASE=shopping_cart_mrl
+    ports:
+      - "27017:27017"
+    command: mongod --smallfiles
+    volumes:
+      - ./docker/mongodb/:/docker-entrypoint-initdb.d
+    networks:
+      - udemy-network
+  rest-with-spring-boot-udemy:
+    image: rest-with-spring-boot-udemy
+    restart: always
+    build: ./RestWithSpringBootUdemy
+    working_dir: /RestWithSpringBootUdemy
+    environment:
+      TZ: America/Sao_Paulo
+      SPRING_BOOT_ENVIRONMENT: Production
+    ports:
+      - "8080:8080"
+    command: mvn spring-boot:run
+    links:
+      - db
+    depends_on:
+      - db
+    networks:
+      - udemy-network
+networks:
+    udemy-network:
+        driver: bridge
