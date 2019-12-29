@@ -23,7 +23,7 @@ public class JwtTokenProvider {
 	private String secretKey = "secret";
 	
 	@Value("${security.jwt.token.expire-length:3600000}")
-	private long validityInMilliseconds = 3600000; //1h
+	private long validityInMilliseconds = 3600000;
 	
 	@Autowired
 	private UserService userDetailsService;
@@ -60,7 +60,7 @@ public class JwtTokenProvider {
 	public String resolveToken(HttpServletRequest req) {
 		String bearerToken = req.getHeader("Authorization");
 		if (bearerToken != null && bearerToken.startsWith("Bearer ")) {
-			return bearerToken.substring(7, bearerToken.length());
+			return bearerToken.substring(7);
 		}		
 		return null;
 	}
@@ -68,10 +68,7 @@ public class JwtTokenProvider {
 	public boolean validateToken(String token) {
 		try {
 			Jws<Claims> claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
-			if (claims.getBody().getExpiration().before(new Date())) {
-				return false;
-			}
-			return true;
+			return !claims.getBody().getExpiration().before(new Date());
 		} catch (JwtException | IllegalArgumentException e) {
 			throw new InvalidJwtAuthenticationException("Expired or invalid JWT token");
 		}

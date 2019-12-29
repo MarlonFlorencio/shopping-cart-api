@@ -51,8 +51,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 				.antMatchers("/auth/signin", "/auth/signup" , "/api-docs/**", "/swagger-ui.html**").permitAll()
 				.antMatchers("/api/admin/**").hasAuthority(RoleEnum.ADMIN.name())
 				.antMatchers("/api/**").authenticated()
-				//todo add /api/admin
-
 				.and()
 				.apply(new JwtConfigurer(tokenProvider));
 	}

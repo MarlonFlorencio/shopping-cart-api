@@ -37,7 +37,7 @@ public class InitMongoDataConfig {
 				String email = "admin@test.com";
 				Optional<User> admin = userService.findByEmail(email);
 				if (!admin.isPresent()) {
-					userService.createGeneralUser(email, "admin123", "Admin", RoleEnum.ADMIN);
+					userService.create(email, "admin123", "Admin", RoleEnum.ADMIN);
 				}
 			}
 		};

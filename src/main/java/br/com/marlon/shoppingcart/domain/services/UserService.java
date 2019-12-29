@@ -1,6 +1,7 @@
 package br.com.marlon.shoppingcart.domain.services;
 
 import br.com.marlon.shoppingcart.domain.enums.RoleEnum;
+import br.com.marlon.shoppingcart.domain.exception.BadRequestException;
 import br.com.marlon.shoppingcart.domain.exception.ResourceNotFoundException;
 import br.com.marlon.shoppingcart.domain.model.Role;
 import br.com.marlon.shoppingcart.domain.model.User;
@@ -8,7 +9,6 @@ import br.com.marlon.shoppingcart.domain.repository.RoleRepository;
 import br.com.marlon.shoppingcart.domain.repository.UserRepository;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -44,16 +44,16 @@ public class UserService implements UserDetailsService {
     }
 
     @Transactional
-    public synchronized User createGeneralUser(String email, String password, String name, RoleEnum role) {
-        synchronized (email) {
-            checkNewGeneralUser(email, password, name, role);
+    public synchronized User create(String email, String password, String name, RoleEnum role) {
+        synchronized (this) {
+            checkNewUser(email, password, name, role);
             User user = buildUser(email, password, name, role);
             repository.save(user);
             return user;
         }
     }
 
-    private void checkNewGeneralUser(String email, String password, String name, RoleEnum role) {
+    private void checkNewUser(String email, String password, String name, RoleEnum role) {
         validateIsBlank(email, "Email is required");
         validateIsBlank(password, "Password is required");
         validateIsBlank(name, "Name is required");
@@ -63,7 +63,7 @@ public class UserService implements UserDetailsService {
 
     private void checkIfEmailIsAvailable(String email) {
         if (findByEmail(email).isPresent()) {
-            throw new BadCredentialsException("User with email " + email + " already exists");
+            throw new BadRequestException("User with email " + email + " already exists");
         }
     }
 
@@ -91,28 +91,29 @@ public class UserService implements UserDetailsService {
     }
 
     @Transactional
-    public synchronized User updateGeneralUser(User user) {
+    public User update(User updatedUser) {
 
-        checkExisGeneralUser(user);
+        checkUpdatedUser(updatedUser);
 
-        User updatedUser = findById(user.getId());
+        synchronized (updatedUser.getId()) {
+            User user = findById(updatedUser.getId());
+            user.setName(updatedUser.getName());
 
-        updatedUser.setName(user.getName());
+            if (!updatedUser.getEmail().equalsIgnoreCase(user.getEmail())) {
+                checkIfEmailIsAvailable(updatedUser.getEmail());
+                user.setEmail(updatedUser.getEmail());
+            }
 
-        if (!user.getEmail().equalsIgnoreCase(updatedUser.getEmail())) {
-            checkIfEmailIsAvailable(user.getEmail());
+            if (StringUtils.isNotBlank(updatedUser.getPassword())) {
+                user.setPassword(passwordEncoder.encode(updatedUser.getPassword()));
+            }
+
+            repository.save(user);
+            return user;
         }
-
-        if (StringUtils.isNotBlank(user.getPassword())) {
-            updatedUser.setPassword(passwordEncoder.encode(user.getPassword()));
-        }
-
-        repository.save(updatedUser);
-        return updatedUser;
-
     }
 
-    private void checkExisGeneralUser(User user) {
+    private void checkUpdatedUser(User user) {
         validateIsBlank(user.getId(), "Id is required");
         validateIsBlank(user.getEmail(), "Email is required");
         validateIsBlank(user.getName(), "Name is required");

@@ -1,5 +1,9 @@
 package br.com.marlon.shoppingcart.testing;
 
+import br.com.marlon.shoppingcart.application.security.JwtTokenProvider;
+import br.com.marlon.shoppingcart.domain.enums.RoleEnum;
+import br.com.marlon.shoppingcart.domain.model.Role;
+import br.com.marlon.shoppingcart.domain.model.User;
 import br.com.marlon.shoppingcart.domain.repository.CartRepository;
 import br.com.marlon.shoppingcart.domain.repository.ItemRepository;
 import br.com.marlon.shoppingcart.domain.repository.RoleRepository;
@@ -12,39 +16,82 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 @WebMvcTest
 @RunWith(SpringRunner.class)
 abstract public class RestIntegrationTest {
 
-  @Autowired
-  protected MockMvc mockMvc;
+    protected static final String ID = "1";
+    protected static final String EMAIL = "test@test.com";
+    protected static final String PASSWORD = "12345";
+    protected static final String NAME = "Test";
 
-  @MockBean
-  protected UserService userService;
+    @Autowired
+    protected MockMvc mockMvc;
 
-  @MockBean
-  protected ItemService itemService;
+    @MockBean
+    protected UserService userService;
 
-  @MockBean
-  protected CartService cartService;
+    @MockBean
+    protected ItemService itemService;
 
-  @MockBean
-  protected UserRepository userRepository;
+    @MockBean
+    protected CartService cartService;
 
-  @MockBean
-  protected ItemRepository userwRepository;
+    @MockBean
+    protected UserRepository userRepository;
 
-  @MockBean
-  protected RoleRepository roleRepository;
+    @MockBean
+    protected ItemRepository userwRepository;
 
-  @MockBean
-  protected CartRepository cartRepository;
+    @MockBean
+    protected RoleRepository roleRepository;
 
-  @Autowired
-  protected ObjectMapper objectMapper;
+    @MockBean
+    protected CartRepository cartRepository;
+
+    @Autowired
+    protected ObjectMapper objectMapper;
+
+    @Autowired
+    private JwtTokenProvider tokenProvider;
+
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
+
+    protected String createToken(User user) {
+
+        List<String> roles = user
+                .getRoles()
+                .stream()
+                .map(Role::getDescription)
+                .collect(Collectors.toList());
+
+        return "Bearer " + tokenProvider.createToken(user.getUsername(), roles);
+    }
+
+    protected User buildUser() {
+
+        User user = new User();
+        user.setId(ID);
+        user.setEmail(EMAIL);
+        user.setPassword(passwordEncoder.encode(PASSWORD));
+        user.setName(NAME);
+        user.setAccountNonExpired(true);
+        user.setAccountNonLocked(true);
+        user.setCredentialsNonExpired(true);
+        user.setEnabled(true);
+        user.setRoles(Arrays.asList(new Role("2", RoleEnum.USER.name())));
+
+        return user;
+    }
 
 }

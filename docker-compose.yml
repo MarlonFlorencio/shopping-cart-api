@@ -14,24 +14,19 @@ services:
     volumes:
       - ./docker/mongodb/:/docker-entrypoint-initdb.d
     networks:
-      - udemy-network
-  rest-with-spring-boot-udemy:
-    image: rest-with-spring-boot-udemy
+      - marlon-network
+  shopping-cart-api:
+    image: shopping-cart-api
     restart: always
-    build: ./RestWithSpringBootUdemy
-    working_dir: /RestWithSpringBootUdemy
-    environment:
-      TZ: America/Sao_Paulo
-      SPRING_BOOT_ENVIRONMENT: Production
+    build: ./
     ports:
       - "8080:8080"
-    command: mvn spring-boot:run
     links:
-      - db
+      - mongo
     depends_on:
-      - db
+      - mongo
     networks:
-      - udemy-network
+      - marlon-network
 networks:
-    udemy-network:
+    marlon-network:
         driver: bridge

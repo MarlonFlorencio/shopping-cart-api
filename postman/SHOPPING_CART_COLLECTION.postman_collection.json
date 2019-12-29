@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "dfdb165d-0afb-4cac-9259-23164bbc334e",
-		"name": "Shopping Cart Collection",
+		"name": "SHOPPING_CART_COLLECTION",
 		"description": "Some description about your API.\n\nContact Support:\n Name: Marlon Florencio",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -18,10 +18,39 @@
 								{
 									"name": "Create Item",
 									"request": {
-										"method": "GET",
-										"header": [],
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{bearer_admin_token}}",
+												"type": "text"
+											},
+											{
+												"key": "Content-Type",
+												"name": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n\t\"name\": \"IPhone\",\n    \"price\": 11.15\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
 										"url": {
-											"raw": ""
+											"raw": "{{baseUrl}}/api/admin/item",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"admin",
+												"item"
+											]
 										}
 									},
 									"response": []
@@ -501,6 +530,33 @@
 								}
 							},
 							"response": []
+						},
+						{
+							"name": "Return info from authenticated user",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "Bearer {{bearer_token}}"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:8080/api/user/my-info",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"user",
+										"my-info"
+									]
+								}
+							},
+							"response": []
 						}
 					],
 					"protocolProfileBehavior": {},
@@ -838,7 +894,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"password\": \"123456\",\n    \"email\": \"simpleUser@test.com\"\n}"
+					"raw": "{\n    \"email\": \"{{general_user}}\",\n    \"password\": \"{{general_password}}\"\n}"
 				},
 				"url": {
 					"raw": "{{baseUrl}}/auth/signin",
@@ -1049,7 +1105,7 @@
 						"exec": [
 							"if (responseCode.code >= 200 && responseCode.code <= 299) {",
 							"    var jsonData = JSON.parse(responseBody);",
-							"\tpostman.setEnvironmentVariable('bearer_token', jsonData.token);",
+							"\tpostman.setEnvironmentVariable('bearer_admin_token', jsonData.token);",
 							"}"
 						],
 						"type": "text/javascript"
@@ -1069,7 +1125,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"password\": \"admin123\",\n    \"email\": \"admin@test.com\"\n}"
+					"raw": "{\n    \"email\": \"{{admin_user}}\",\n    \"password\": \"{{admin_password}}\"\n}"
 				},
 				"url": {
 					"raw": "{{baseUrl}}/auth/signin",
@@ -1284,7 +1340,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"password\": \"123456\",\n    \"email\": \"simpleUser@test.com\",\n    \"name\": \"Simple User\"\n}",
+					"raw": "{\n    \"email\": \"{{general_user}}\",\n    \"password\": \"{{general_password}}\",\n    \"name\": \"Simple User\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"

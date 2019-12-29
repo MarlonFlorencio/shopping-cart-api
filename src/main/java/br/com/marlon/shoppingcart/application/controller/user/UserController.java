@@ -23,6 +23,13 @@ public class UserController extends AbstractUserAuthController {
 	@Autowired
 	private UserService service;
 
+	@ApiOperation(value = "Return info from authenticated user" )
+	@GetMapping("/my-info")
+	public UserDto myInfo(Authentication authentication) {
+		User user = service.findById(getPrincipal(authentication).getId());
+		return toDto(user);
+	}
+
 	@ApiOperation(value = "Find an user by id" )
 	@GetMapping("/{id}")
 	public UserDto findById(@PathVariable("id") String id, Authentication authentication) {
@@ -35,7 +42,7 @@ public class UserController extends AbstractUserAuthController {
 	@PutMapping
 	public AuthResult update(@RequestBody UserUpdateDto user, Authentication authentication) {
 		validateAccess(user.getId(), authentication);
-		User updatedUser = service.updateGeneralUser(toEntity(user));
+		User updatedUser = service.update(toEntity(user));
 
 		String token = createToken(updatedUser);
 		return new AuthResult(token);

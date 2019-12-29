@@ -18,9 +18,6 @@ public class ResponseExceptionHandler extends ResponseEntityExceptionHandler{
 	
 	@ExceptionHandler(Exception.class)
 	public final ResponseEntity<ExceptionResponse> handleAllExceptions(Exception ex, WebRequest request) {
-
-		ex.printStackTrace();
-
 		ExceptionResponse result = getExceptionResponse(ex, request);
 
 		HttpStatus status = ex instanceof ApiException

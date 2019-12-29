@@ -2,7 +2,6 @@ package br.com.marlon.shoppingcart.application.controller.user.dto;
 
 import br.com.marlon.shoppingcart.application.controller.user.UserController;
 import br.com.marlon.shoppingcart.domain.model.User;
-import org.springframework.data.domain.Page;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
@@ -27,10 +26,6 @@ public class UserConverter {
         dto.add(linkTo(methodOn(UserController.class).findById(user.getId(), null)).withSelfRel());
 
         return dto;
-    }
-
-    public static Page<UserDto> toDtoPage(Page<User> page) {
-        return page.map(UserConverter::toDto);
     }
 
 }
