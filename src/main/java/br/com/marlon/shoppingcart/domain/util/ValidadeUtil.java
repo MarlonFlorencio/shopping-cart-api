@@ -4,6 +4,7 @@ import br.com.marlon.shoppingcart.domain.exception.BadRequestException;
 import org.apache.commons.lang3.StringUtils;
 
 import java.math.BigDecimal;
+import java.util.regex.Pattern;
 
 public class ValidadeUtil {
 
@@ -25,4 +26,13 @@ public class ValidadeUtil {
         }
     }
 
+    public static void validateEmailIsValid(String value, String message) {
+        if (!getEmailRegex().matcher(value).find()) {
+            throw new BadRequestException(message);
+        }
+    }
+
+    private static Pattern getEmailRegex()  {
+        return Pattern.compile("^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
+    }
 }

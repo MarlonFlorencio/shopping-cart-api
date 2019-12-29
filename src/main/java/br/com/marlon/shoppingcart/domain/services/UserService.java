@@ -18,8 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Arrays;
 import java.util.Optional;
 
-import static br.com.marlon.shoppingcart.domain.util.ValidadeUtil.validateIsBlank;
-import static br.com.marlon.shoppingcart.domain.util.ValidadeUtil.validateIsNull;
+import static br.com.marlon.shoppingcart.domain.util.ValidadeUtil.*;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -58,6 +57,7 @@ public class UserService implements UserDetailsService {
         validateIsBlank(password, "Password is required");
         validateIsBlank(name, "Name is required");
         validateIsNull(role, "Role is required");
+        validateEmailIsValid(email, "Email is not valid");
         checkIfEmailIsAvailable(email);
     }
 
@@ -117,6 +117,7 @@ public class UserService implements UserDetailsService {
         validateIsBlank(user.getId(), "Id is required");
         validateIsBlank(user.getEmail(), "Email is required");
         validateIsBlank(user.getName(), "Name is required");
+        validateEmailIsValid(user.getEmail(), "Email is not valid");
     }
 
 }

@@ -58,6 +58,11 @@ public class UserServiceTest {
 	}
 
 	@Test(expected = BadRequestException.class)
+	public void create_withInvalidEmail_shouldThrowBadRequestException() {
+		service.create("@test.com", PASSWORD, NAME, USER);
+	}
+
+	@Test(expected = BadRequestException.class)
 	public void create_withEmptyPassword_shouldThrowBadRequestException() {
 		service.create(EMAIL, "", NAME, USER);
 	}
@@ -156,6 +161,15 @@ public class UserServiceTest {
 		User user = new User();
 		user.setId("1");
 		user.setEmail(null);
+		user.setName(NAME);
+		service.update(user);
+	}
+
+	@Test(expected = BadRequestException.class)
+	public void update_withInvalidEmail_shouldThrowBadRequestException() {
+		User user = new User();
+		user.setId("1");
+		user.setEmail("@test.com");
 		user.setName(NAME);
 		service.update(user);
 	}
