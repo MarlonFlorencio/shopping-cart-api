@@ -32,6 +32,7 @@ target/site/jacoco/index.html
 To start the app, let's use docker-compose 
 
 ```bash
+$ mvn clean package
 $ docker-compose build
 $ docker-compose up 
 ```
