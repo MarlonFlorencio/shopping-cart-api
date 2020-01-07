@@ -1,0 +1,36 @@
+spring:
+  data:
+    mongodb:
+      authentication-database: admin
+      username: root
+      password: supersecret
+      database: shopping_cart_mrl
+      host: localhost
+      port: 27017
+
+server:
+  port: 8080
+
+---
+spring:
+  profiles: hom
+  data:
+    mongodb:
+      authentication-database: admin
+      username: "${MONGODB_USER}"
+      password: "${MONGODB_PASS}"
+      database: shopping_cart_mrl
+      host: mongo
+      port: 27017
+
+---
+spring:
+  profiles: prod
+  data:
+    mongodb:
+      authentication-database: admin
+      username: "${MONGODB_USER}"
+      password: "${MONGODB_PASS}"
+      database: shopping_cart_mrl
+      host: mongo
+      port: 27017
