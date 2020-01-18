@@ -21,13 +21,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/auth")
 public class AuthController extends AbstractUserAuthController {
-	
+
 	@Autowired
 	AuthenticationManager authenticationManager;
-	
+
 	@Autowired
 	UserService userService;
-	
+
 	@ApiOperation(value = "Authenticate an user and returns a token")
 	@PostMapping("/signin")
 	public AuthResult signin(@RequestBody SignInDto signInDto) {
@@ -39,13 +39,12 @@ public class AuthController extends AbstractUserAuthController {
 
 		User user = userService.loadUserByUsername(email);
 		String token = createToken(user);
-
 		return new AuthResult(token);
 	}
 
 	@ApiOperation(value = "Register an user and returns a token")
-	@PostMapping("/signup")
-	public AuthResult signup(@RequestBody SignUpDto signUpDto) {
+	@PostMapping("/registration")
+	public AuthResult registration(@RequestBody SignUpDto signUpDto) {
 
 		String email = signUpDto.getEmail();
 		String password = signUpDto.getPassword();

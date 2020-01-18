@@ -9,6 +9,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 import static br.com.marlon.shoppingcart.domain.util.ValidadeUtil.*;
 
 @Service
@@ -54,6 +56,10 @@ public class ItemService {
 
 	public Page<Item> findByName(String name, Pageable pageable) {
 		return repository.findByNameLikeIgnoreCase(name, pageable);
+	}
+
+	public Optional<Item> findFirstByName(String name) {
+		return repository.findFirstByNameLikeIgnoreCase(name);
 	}
 
 	private void validateItem(Item item, boolean isUpdate) {
