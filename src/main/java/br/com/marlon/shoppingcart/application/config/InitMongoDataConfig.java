@@ -30,9 +30,17 @@ public class InitMongoDataConfig {
                 addUser(userService, "admin@test.com", "admin123", "Admin", RoleEnum.ADMIN);
                 addUser(userService, "user1@test.com", "123456", "User1", RoleEnum.USER);
 
-                addItem(itemService, "Dell Notebook G3", BigDecimal.valueOf(1500));
-                addItem(itemService, "Dell Notebook G5", BigDecimal.valueOf(1600));
-                addItem(itemService, "Dell Notebook G7", BigDecimal.valueOf(1700));
+                addItem(itemService, "Dell Notebook G3", BigDecimal.valueOf(1.99));
+                addItem(itemService, "Mouse Gamer Logitech G502", BigDecimal.valueOf(892.99));
+                addItem(itemService, "Gamer DT3sports", BigDecimal.valueOf(912.31));
+                addItem(itemService, "Notebook Acer Aspire 5", BigDecimal.valueOf(10.50));
+                addItem(itemService, "Monitor LG LED 25", BigDecimal.valueOf(22.86));
+                addItem(itemService, "AMD Ryzen 5 3600", BigDecimal.valueOf(4245.86));
+                addItem(itemService, "SSD Kingston A400", BigDecimal.valueOf(1214.2));
+                addItem(itemService, "Console Sony PlayStation 4", BigDecimal.valueOf(32.73));
+                addItem(itemService, "Headset Gamer Astro A40 MixAmp", BigDecimal.valueOf(7432.53));
+                addItem(itemService, "AirPods", BigDecimal.valueOf(234.24));
+                addItem(itemService, "Intel Core i5-9400F Coffee Lake", BigDecimal.valueOf(23.52));
             }
 
         };

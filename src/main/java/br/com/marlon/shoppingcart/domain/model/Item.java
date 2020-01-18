@@ -2,6 +2,7 @@ package br.com.marlon.shoppingcart.domain.model;
 
 import lombok.Data;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.math.BigDecimal;
@@ -12,7 +13,10 @@ public class Item {
 
 	@Id
 	private String id;
+
+	@Indexed
 	private String name;
+
 	private BigDecimal price;
 
 }

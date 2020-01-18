@@ -15,7 +15,7 @@ abstract public class AbstractController {
         return PageRequest.of(page, limit, Sort.by(sortDirection, defaultPropertyOrder));
     }
 
-    protected ResponseEntity<?> getResponseEntity(Page<?> page, PagedResourcesAssembler assembler) {
+    protected <T> ResponseEntity<?> getResponseEntity(Page<T> page, PagedResourcesAssembler<T> assembler) {
         return new ResponseEntity<>(assembler.toResource(page), HttpStatus.OK);
     }
 

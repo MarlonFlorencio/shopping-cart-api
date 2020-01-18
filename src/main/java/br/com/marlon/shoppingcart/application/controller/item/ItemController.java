@@ -31,7 +31,7 @@ public class ItemController extends AbstractController {
 		@RequestParam(value="pageSize", defaultValue = "25") int pageSize,
 		@RequestParam(value="direction", defaultValue = "asc") String direction,
 		@RequestParam(value="propertyOrder", defaultValue = "name") String propertyOrder,
-			PagedResourcesAssembler assembler) {
+		PagedResourcesAssembler<ItemDto> assembler) {
 
 		Pageable pageable = getPageable(page, pageSize, direction, propertyOrder);
 		Page<Item> items = service.findAll(pageable);
@@ -42,12 +42,12 @@ public class ItemController extends AbstractController {
 	@ApiOperation(value = "Find all items by name" )
 	@GetMapping("/findByName/{name}")
 	public ResponseEntity<?> findByName(
-			@PathVariable("name") String name,
-			@RequestParam(value="page", defaultValue = "0") int page,
-			@RequestParam(value="pageSize", defaultValue = "25") int pageSize,
-			@RequestParam(value="direction", defaultValue = "asc") String direction,
-			@RequestParam(value="propertyOrder", defaultValue = "name") String propertyOrder,
-			PagedResourcesAssembler assembler) {
+		@PathVariable("name") String name,
+		@RequestParam(value="page", defaultValue = "0") int page,
+		@RequestParam(value="pageSize", defaultValue = "25") int pageSize,
+		@RequestParam(value="direction", defaultValue = "asc") String direction,
+		@RequestParam(value="propertyOrder", defaultValue = "name") String propertyOrder,
+		PagedResourcesAssembler<ItemDto> assembler) {
 
 		Pageable pageable = getPageable(page, pageSize, direction, propertyOrder);
 		Page<Item> items = service.findByName(name, pageable);
