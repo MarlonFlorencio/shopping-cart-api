@@ -57,6 +57,27 @@ public class CartService {
 		}
 	}
 
+	@Transactional
+	public Cart removeItem(String userId, String itemId) {
+
+		Item item = itemService.findById(itemId);
+
+		synchronized (userId) {
+
+			Cart cart = getOrCreateDraftCart(userId);
+
+			Set<CartItem> list =
+				cart.getItems()
+					.stream()
+					.filter( c -> !item.getId().equals(c.getItemId()) )
+					.collect(Collectors.toSet());
+
+			cart.setItems(list);
+
+			return repository.save(cart);
+		}
+	}
+
 	private Cart getOrCreateDraftCart(String userId) {
 		Optional<Cart> optionalCart = repository.findByUserIdAndStatus(userId, STATUS_DRAFT);
 		return optionalCart.orElseGet( () -> createCart(userId) );
@@ -73,13 +94,17 @@ public class CartService {
 	@Transactional
 	public Cart closeCart(String userId) {
 
-		Cart cart = repository.findByUserIdAndStatus(userId, STATUS_DRAFT)
+		Cart cart = getDraftedCart(userId)
 				.orElseThrow(() -> new ResourceNotFoundException("No draft Cart was found"));
 
 		cart.setStatus(STATUS_CLOSED);
 		cart.setDate(LocalDateTime.now());
 
 		return repository.save(cart);
+	}
+
+	public Optional<Cart> getDraftedCart(String userId) {
+		return repository.findByUserIdAndStatus(userId, STATUS_DRAFT);
 	}
 
 	public Cart findById(String id) {

@@ -38,6 +38,18 @@ public class CartController extends AbstractUserAuthController {
 		return toDto(cart);
 	}
 
+	@ApiOperation(value = "Remove item to the draft Cart")
+	@PostMapping("/remove-item/{itemId}")
+	public CartDto removeItem(
+		@PathVariable("itemId") String itemId,
+		Authentication authentication) {
+
+		User user = getPrincipal(authentication);
+		Cart cart = service.removeItem(user.getId(), itemId);
+
+		return toDto(cart);
+	}
+
 	@ApiOperation(value = "Close the draft Cart" )
 	@PostMapping("/close")
 	public CartDto closeCart(Authentication authentication) {
@@ -60,9 +72,17 @@ public class CartController extends AbstractUserAuthController {
 		return toDto(cart);
 	}
 
+	@ApiOperation(value = "Find the drafted cart" )
+	@GetMapping("/draftedCart")
+	public CartDto getDraftedCart(Authentication authentication) {
+		User user = getPrincipal(authentication);
+		Cart cart = service.getDraftedCart(user.getId()).orElse(new Cart());
+		return toDto(cart);
+	}
+
 	@ApiOperation(value = "Find all closed carts" )
-	@GetMapping("/findClosedCarts")
-	public ResponseEntity<?> findClosedCarts(
+	@GetMapping("/closedCarts")
+	public ResponseEntity<?> getClosedCarts(
 			@RequestParam(value="page", defaultValue = "0") int page,
 			@RequestParam(value="pageSize", defaultValue = "25") int pageSize,
 			@RequestParam(value="direction", defaultValue = "asc") String direction,

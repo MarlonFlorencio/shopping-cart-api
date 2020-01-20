@@ -6,6 +6,7 @@ import br.com.marlon.shoppingcart.domain.model.CartItem;
 import org.springframework.data.domain.Page;
 
 import java.math.BigDecimal;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -49,6 +50,11 @@ public class CartConverter {
     }
 
     private static List<CartItemDto> toDtoList(Set<CartItem> list) {
+
+        if (list == null)  {
+            return Collections.emptyList();
+        }
+
         return list
                 .stream()
                 .map(CartConverter::toDto)
