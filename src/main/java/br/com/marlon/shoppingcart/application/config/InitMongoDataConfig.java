@@ -60,7 +60,7 @@ public class InitMongoDataConfig {
     private void addUser(UserService userService, String email, String password, String name,  RoleEnum role ) {
         Optional<User> admin = userService.findByEmail(email);
         if (!admin.isPresent()) {
-            userService.create(email, password, name, RoleEnum.ADMIN);
+            userService.create(email, password, name, role);
         }
     }
 

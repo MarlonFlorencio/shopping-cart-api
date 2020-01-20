@@ -11,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.Optional;
 import java.util.Set;
@@ -76,6 +77,7 @@ public class CartService {
 				.orElseThrow(() -> new ResourceNotFoundException("No draft Cart was found"));
 
 		cart.setStatus(STATUS_CLOSED);
+		cart.setDate(LocalDateTime.now());
 
 		return repository.save(cart);
 	}

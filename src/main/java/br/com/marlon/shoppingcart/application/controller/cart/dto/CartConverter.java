@@ -21,6 +21,7 @@ public class CartConverter {
         dto.setKey(entity.getId());
         dto.setUserId(entity.getUserId());
         dto.setStatus(entity.getStatus());
+        dto.setDate(entity.getDate());
         dto.setItems(toDtoList(entity.getItems()));
         dto.setTotal(getCartTotal(dto.getItems()));
 

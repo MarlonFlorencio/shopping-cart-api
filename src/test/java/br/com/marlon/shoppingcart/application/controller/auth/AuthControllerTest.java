@@ -29,7 +29,7 @@ public class AuthControllerTest extends RestIntegrationTest {
         SignUpDto signUpDto = new SignUpDto(EMAIL, PASSWORD, NAME);
 
         //
-        MvcResult result = mockMvc.perform(post("/auth/signup")
+        MvcResult result = mockMvc.perform(post("/auth/registration")
                 .contentType("application/json")
                 .content(objectMapper.writeValueAsString(signUpDto)))
                 .andExpect(status().isOk())
@@ -48,7 +48,7 @@ public class AuthControllerTest extends RestIntegrationTest {
         SignUpDto signUpDto = new SignUpDto("", PASSWORD, NAME);
 
         //
-        MvcResult result = mockMvc.perform(post("/auth/signup")
+        MvcResult result = mockMvc.perform(post("/auth/registration")
                 .contentType("application/json")
                 .content(objectMapper.writeValueAsString(signUpDto)))
                 .andExpect(status().isBadRequest())

@@ -39,10 +39,8 @@ public class CartController extends AbstractUserAuthController {
 	}
 
 	@ApiOperation(value = "Close the draft Cart" )
-	@PostMapping("/{id}/close")
-	public CartDto closeCart(
-			@PathVariable("id") String id,
-			Authentication authentication) {
+	@PostMapping("/close")
+	public CartDto closeCart(Authentication authentication) {
 
 		User user = getPrincipal(authentication);
 		Cart cart = service.closeCart(user.getId());
@@ -66,14 +64,15 @@ public class CartController extends AbstractUserAuthController {
 	@GetMapping("/findClosedCarts")
 	public ResponseEntity<?> findClosedCarts(
 			@RequestParam(value="page", defaultValue = "0") int page,
-			@RequestParam(value="limit", defaultValue = "50") int limit,
+			@RequestParam(value="pageSize", defaultValue = "25") int pageSize,
 			@RequestParam(value="direction", defaultValue = "asc") String direction,
+			@RequestParam(value="propertyOrder", defaultValue = "id") String propertyOrder,
 			Authentication authentication,
 			PagedResourcesAssembler assembler) {
 
 		User user = getPrincipal(authentication);
 
-		Pageable pageable = getPageable(page, limit, direction, "id");
+		Pageable pageable = getPageable(page, pageSize, direction, propertyOrder);
 		Page<Cart> items = service.findClosedCarts(user.getId(), pageable);
 		return getResponseEntity(toDtoPage(items), assembler);
 	}

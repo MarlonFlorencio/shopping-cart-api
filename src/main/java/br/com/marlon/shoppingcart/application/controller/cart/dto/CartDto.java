@@ -6,10 +6,11 @@ import lombok.Data;
 import org.springframework.hateoas.ResourceSupport;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
-@JsonPropertyOrder({ "id", "userId", "status", "total", "items" })
+@JsonPropertyOrder({ "id", "userId", "status", "total", "date", "items" })
 public class CartDto extends ResourceSupport {
 
 	@JsonProperty("id")
@@ -17,6 +18,7 @@ public class CartDto extends ResourceSupport {
 	private String userId;
 	private String status;
 	private BigDecimal total;
+	private LocalDateTime date;
 	private List<CartItemDto> items;
 
 }
