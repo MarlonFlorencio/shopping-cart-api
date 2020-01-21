@@ -39,7 +39,7 @@ public class CartControllerTest extends RestIntegrationTest {
                 .thenReturn(buildPage(cart));
 
         //
-        MvcResult result = mockMvc.perform(get("/api/cart/findClosedCarts")
+        MvcResult result = mockMvc.perform(get("/api/cart/closedCarts")
                 .contentType("application/json")
                 .header("Authorization", createToken(user)))
                 .andExpect(status().isOk())
