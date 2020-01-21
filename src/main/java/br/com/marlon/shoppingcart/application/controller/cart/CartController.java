@@ -38,7 +38,7 @@ public class CartController extends AbstractUserAuthController {
 		return toDto(cart);
 	}
 
-	@ApiOperation(value = "Remove item to the draft Cart")
+	@ApiOperation(value = "Remove item from the draft Cart")
 	@PostMapping("/remove-item/{itemId}")
 	public CartDto removeItem(
 		@PathVariable("itemId") String itemId,
@@ -46,6 +46,18 @@ public class CartController extends AbstractUserAuthController {
 
 		User user = getPrincipal(authentication);
 		Cart cart = service.removeItem(user.getId(), itemId);
+
+		return toDto(cart);
+	}
+
+	@ApiOperation(value = "Remove one item from the draft Cart")
+	@PostMapping("/remove-one-item/{itemId}")
+	public CartDto removeOneItem(
+		@PathVariable("itemId") String itemId,
+		Authentication authentication) {
+
+		User user = getPrincipal(authentication);
+		Cart cart = service.removeOneItem(user.getId(), itemId);
 
 		return toDto(cart);
 	}

@@ -58,7 +58,7 @@ public class CartService {
 	}
 
 	@Transactional
-	public Cart removeItem(String userId, String itemId) {
+	public Cart removeOneItem(String userId, String itemId) {
 
 		Item item = itemService.findById(itemId);
 
@@ -66,6 +66,35 @@ public class CartService {
 
 			Cart cart = getOrCreateDraftCart(userId);
 
+			Set<CartItem> list = cart.getItems().stream().collect(Collectors.toSet());
+
+			CartItem cartItem = list
+				.stream()
+				.filter( c -> c.getItemId().equals(item.getId()))
+				.findFirst()
+				.orElse( new CartItem(item));
+
+			AtomicLong quantity = new AtomicLong(cartItem.getQuantity());
+
+			if (quantity.get() == 1) {
+				return cart;
+			}
+
+			cartItem.setQuantity(quantity.decrementAndGet());
+			list.add(cartItem);
+			cart.setItems(list);
+
+			return repository.save(cart);
+		}
+	}
+
+	@Transactional
+	public Cart removeItem(String userId, String itemId) {
+
+		Item item = itemService.findById(itemId);
+
+		synchronized (userId) {
+			Cart cart = getOrCreateDraftCart(userId);
 			Set<CartItem> list =
 				cart.getItems()
 					.stream()
@@ -73,7 +102,6 @@ public class CartService {
 					.collect(Collectors.toSet());
 
 			cart.setItems(list);
-
 			return repository.save(cart);
 		}
 	}

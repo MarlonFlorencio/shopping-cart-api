@@ -28,9 +28,4 @@ spring:
   profiles: prod
   data:
     mongodb:
-      authentication-database: admin
-      username: "${MONGODB_USER}"
-      password: "${MONGODB_PASS}"
-      database: shopping_cart_mrl
-      host: mongo
-      port: 27017
+      uri: "${MONGODB_URI}"
