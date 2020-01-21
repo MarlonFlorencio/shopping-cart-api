@@ -33,3 +33,4 @@ deploy:
   app: shopping-cart-api-mrl
   on:
     tags: true
+    repo: MarlonFlorencio/shopping-cart-api
