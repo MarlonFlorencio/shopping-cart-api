@@ -1,0 +1,37 @@
+language: java
+jdk:
+- openjdk8
+services:
+- docker
+env:
+  global:
+  - secure: OQSy0GwCkY/bKkGr+YVHtHHgO7BbcUUAkezMq8+24qFE8uILXs6P7yG0v4nbL3ZhpIUJZtC9E55vGlHFv4GWi5ofYDuRpbSn3FvvDjGl5nzCQF1uH1OtgMPJRu/7GHJXMMF+WJzKuyPrwMwfwWAjOJwaun7L+CJQwsY6c7+uo/+ibRircZlVeQKZaFrcecyQ8o6foV2ZnGU1eC6xrKFoaz/Hp+d+Ltsa4QO9UoFXh8SfjXWIDim+MW1URtm0mmm3/VrPri9UHHUO/5Z9TJWH1bL5ALXCX/p1bze6sdfRhPK6MIHvLsqYnZlHuCyX3criJeYPWO+EvZwQo+ndQ/D5Si9nIy6reHFAtur8+gqYDgrx9hBVBngilk2cI6JATN5eZboBxBMhq+2phMDnfADLMaExjFyDGnLe6CXEVkzMzq02AtErM0L8wyE0LDcZB8sBgz5S4C6V1iIPvKT/81fOBBVIyyVZ7r3AiCoImmgon9S4HSiFDY4X711++ZGjkxythIZaPkn/AEkNlj7bvGGci6UC57zyG7uPLlqpPp72Vl2c4GDYFMxV98qmCg0tWlb6f/s1IUFrUftDPjMdEkhdOFbjqg8UpZB+HinTQNGn+c1j18qjKoLOVDweAQc2X7BI1pEGBoxRXnx3hKr1Eb+toyy/6XwNJ2W0OwwWRvS2URY=
+  - secure: fMXm+Dk9M9Nl0gea4Ffh+0/m4E15s1ciutQaDaezk5zocnADRmgi5CGiaA0ESymJY0FkCcYhnvo8ileRLpB6fsVrJ4climBg5LcHskS8vQPZUGZUt59YixqQqyZB0WrLCO851pqsm8mzlNwSmi5UTVGdA6khzSjpz24Xo/cGF9/iO+3RPV8rQuV/e4BK6SVnVuKNryEg2M48Rcon7YoDeCAOq7c/CBwFkUTXiMaQ0dU2abwFryS/BUaqqBn+AulozW1pbah6TbOO6FBa/ASdbn7xB9E92AGu7Z3uNIByLUscLzARQ2ykUKnke0ioQwUwIvEDE+ChvP4pulrLMLwcef6spICbTbUL19hQolDc6TShCgBtdu0ILyk7wtS3X2Li6re2KF+JttJSiYdA0vjqgIxWgM8o18ZplxDNP4NKbhMHbl6NpbRo3ocr5JLo2mNOV8izp6XWrz40uZP3GvJxVp+WSndMhgssxk/Z78RXLBG+TuJl0dTtDvp+jRsgl73H4fNNvAFKYNWLn+Igj9v4/MCPN5m29rhE/pnlzpqGlKNhoLQ6p8Yx3e7D6QgUptH1S+okjbGhT7p+V45Dx98XNvW3CMR5duUy5jgZz8ifhxjOhXGvwbSOe7VvOKxnLR3TtjlfFbqKTDPH7WSz5cBOWnRTzGOogBzN9cFN/BTslHU=
+  - secure: cYnBqTA4Bd5Q+3OLW77GylZnMcVkLrbID2p4zWRJXmqW6Duu5D9uynslbLk+mDZBXcQlgRgAmXNRHl83FBLfI49th7OFoyMHCnZSycEiDmaBbZLPr0iVKRKH04WntiMWaMDUSIH2hi/CTP6UGeMZfBI1JpCjxNeTuustf2CtGoTl35StiWwM8TQ5XSuK0gYQEo0UqGXK16mgwG7dHgLiASpSUWxQTEhoytt2GReKpxD/rXG9Xh3Qs+MLmHCdts0vX6ehMkbmjRUAEXMk8LBjFcp0LCAe9ZhaGzj7Vroh77fJABYT5Bo5TbhmVUlhgYHYU3z4ZgRhmbKZXZvyNgZ0InRIJVB3LjUk2iKak1fsbISTFf/MwT4LaRFshU0F6Xe8dFyApsvwoE6VReAIXgLfmUv23AdCnDbEipeCTAQuFCwvV56TPOiC7bLcgf2z0VFJBW3jr98ovhzr/M0HDd//zXZLKvyWFLzb6nMwv9SvHWnzv/tXdscl9bEnNMtlE5xIuvHSVgUseHB3GOGwFbku6XV0b1DkvUEq3iu2I23h3ewUCWEBrJTyrsrJgLqXwcoIU2rHRfKBUHXimBoioucLYupGG89gDjFUBbGpypYCTFlOlNvrHJl0G+BVFGlH19GWIukadJIch0zpSFbi+9DKBk2YjBNMvlGXLw1w9UZilA8=
+  - secure: eL5e8l/YT60hA9V1OXwIFFXWX/cxG/vKtixS2O1XGLyIOBZK+krAiWCXn75ZWx51ZSMJnXDe6KTmI5TmzSkXP4t7QVS6VzA8NpDzi+FHfVAbGyJC/ft0X/Vkx6ICd1WElnRDQU/SHIj64aazpDGXWUj/uKbODSckZDD1eGLCLWyyI4su78+IsYwZl8nkQvapSX/udTIvpEMu73/MGEazOSBUJM7IhCJGVq9ft2qTZHKVZ5zQ7qs3fnUWEwtOW5nFZCgHpTUMCIcHVd8RdcVLiX+l/eCby/LPT8pQUU7Zig+27Z3hRGIQqqz6R0JycgINyYdQy23ni3A4ClMIwH/q1dq8Gs4T3BHthwS8Cl/jqB08cY8OKEkI5QGGcqpuWZPRlpbCcKf4uf4olZKxnjWA11xMZ35xQj5agJTTVtFshukUT35ra+zSCGInVxVjzXNoyna0uuTizYww6SqU2Uu8YIQhGwTfySmC0lZw8Z5xzaPYtDndyqgPAdj8+zGD2BljEWCi/AqYVWOzI7Uh7DoPy4qanFNZRXrtzjRENnZLk+ypFkeMSDKdqI4OuYPFHppHTrQ1ecvP/6loNcjrChB+/ofRDUwU03OMPDXT+9fFyWmDl/sxZGM1HbRPBgDNrMvQUZp0aqBY8aqfSTtpj7Q3zlIFolSwZnUA+CkZjmyLZso=
+before_install:
+- docker pull openjdk:8-jdk-alpine
+script:
+- mvn test
+- mvn clean package
+after_success:
+- export COMMIT=${TRAVIS_COMMIT::7}
+- export TAG=`if [ ! -z "$TRAVIS_TAG" ]; then echo "$TRAVIS_TAG"; else echo "$TRAVIS_BRANCH--$COMMIT";
+  fi`
+- docker login -u $DOCKER_USER -p $DOCKER_PASS
+- docker-compose build
+- docker tag $IMAGE_NAME:latest $IMAGE_NAME:$TAG
+- docker push $IMAGE_NAME:$TAG
+- export TITLE="$IMAGE_NAME:$TAG is built properly and pushed to Dockerhub"
+- export TIMESTAMP=`date`
+- export GIT_LOG=`git log -1 --pretty=%B $COMMIT`
+- export TEXT="[build version] $TAG<br />[datetime] $TIMESTAMP<br />[changelog] $GIT_LOG<br/>"
+
+deploy:
+  provider: heroku
+  api-key:
+    secure: "$HEROKU_API_KEY"
+  app: shopping-cart-api-mrl
+  on:
+    tags: true
+    repo: "$IMAGE_NAME"
