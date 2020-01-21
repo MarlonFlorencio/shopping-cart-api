@@ -30,7 +30,7 @@ deploy:
   provider: heroku
   api-key:
     secure: "$HEROKU_API_KEY"
-  app: shopping-cart-api-mrl
+  app: shopping-cart-api-mf
   on:
     tags: true
     repo: MarlonFlorencio/shopping-cart-api
