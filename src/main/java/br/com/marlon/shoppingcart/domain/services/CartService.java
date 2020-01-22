@@ -58,9 +58,30 @@ public class CartService {
 	}
 
 	@Transactional
-	public Cart removeOneItem(String userId, String itemId) {
+	public Cart addOneItem(String userId, String itemId) {
 
-		Item item = itemService.findById(itemId);
+		synchronized (userId) {
+
+			Cart cart = getOrCreateDraftCart(userId);
+			Set<CartItem> list = cart.getItems().stream().collect(Collectors.toSet());
+
+			CartItem cartItem = list
+				.stream()
+				.filter( c -> c.getItemId().equals(itemId))
+				.findFirst()
+				.orElseThrow(() -> new ResourceNotFoundException("Item not found in Cart"));
+
+			AtomicLong quantity = new AtomicLong(cartItem.getQuantity());
+			cartItem.setQuantity(quantity.incrementAndGet());
+			list.add(cartItem);
+			cart.setItems(list);
+
+			return repository.save(cart);
+		}
+	}
+
+	@Transactional
+	public Cart removeOneItem(String userId, String itemId) {
 
 		synchronized (userId) {
 
@@ -70,9 +91,9 @@ public class CartService {
 
 			CartItem cartItem = list
 				.stream()
-				.filter( c -> c.getItemId().equals(item.getId()))
+				.filter( c -> c.getItemId().equals(itemId))
 				.findFirst()
-				.orElse( new CartItem(item));
+				.orElseThrow(() -> new ResourceNotFoundException("Item not found in Cart"));
 
 			AtomicLong quantity = new AtomicLong(cartItem.getQuantity());
 
@@ -91,14 +112,12 @@ public class CartService {
 	@Transactional
 	public Cart removeItem(String userId, String itemId) {
 
-		Item item = itemService.findById(itemId);
-
 		synchronized (userId) {
 			Cart cart = getOrCreateDraftCart(userId);
 			Set<CartItem> list =
 				cart.getItems()
 					.stream()
-					.filter( c -> !item.getId().equals(c.getItemId()) )
+					.filter( c -> !itemId.equals(c.getItemId()) )
 					.collect(Collectors.toSet());
 
 			cart.setItems(list);

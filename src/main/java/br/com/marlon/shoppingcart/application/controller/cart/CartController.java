@@ -38,6 +38,18 @@ public class CartController extends AbstractUserAuthController {
 		return toDto(cart);
 	}
 
+	@ApiOperation(value = "Add one item in the draft Cart")
+	@PostMapping("/add-one-item/{itemId}")
+	public CartDto addOneItem(
+		@PathVariable("itemId") String itemId,
+		Authentication authentication) {
+
+		User user = getPrincipal(authentication);
+		Cart cart = service.addOneItem(user.getId(), itemId);
+
+		return toDto(cart);
+	}
+
 	@ApiOperation(value = "Remove item from the draft Cart")
 	@PostMapping("/remove-item/{itemId}")
 	public CartDto removeItem(
