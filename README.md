@@ -1,5 +1,7 @@
 # Shopping-cart-api
 
+[![Build Status](tps://travis-ci.org/MarlonFlorencio/shopping-cart-api.svg?branch=master)](https://travis-ci.org/MarlonFlorencio/shopping-cart-api)
+
 Shopping Cart API is an backend application for Shopping Cart
 
 ## Artifacts 
