@@ -44,14 +44,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	protected void configure(HttpSecurity http) throws Exception {
 		http
 				.httpBasic().disable()
-				.cors().and() .csrf().disable()
+				.csrf().disable()
 				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 				.and()
 				.authorizeRequests()
 				.antMatchers("/auth/signin", "/auth/signup" , "/api-docs/**", "/swagger-ui.html**").permitAll()
 				.antMatchers("/api/admin/**").hasAuthority(RoleEnum.ADMIN.name())
 				.antMatchers("/api/**").authenticated()
-				.and()
+				.and().cors().disable()
 				.apply(new JwtConfigurer(tokenProvider));
 	}
 
